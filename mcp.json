@@ -1,0 +1,24 @@
+{
+    "mcpServers": {
+      "github": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@smithery/cli@latest",
+          "run",
+          "@smithery-ai/github",
+          "--config",
+          "\"{\\\"githubPersonalAccessToken\\\":\\\"YOUR_TOKEN\\\"}\""
+        ]
+      },
+      "CryptoMCP": {
+        "command": "uv",
+        "args": [
+          "--directory",
+          "~/Repos/CryptoMCP",
+          "run",
+          "mcp4crypto.py"
+        ]
+      }
+    }
+  }

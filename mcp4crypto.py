@@ -2,13 +2,27 @@ import ccxt
 import talib
 import numpy as np
 
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("My MCP Server")
+
 def get_crypto(exchange_id, symbol, timeframe='1h', limit=20):
     exchange = getattr(ccxt, exchange_id)()
     ohlcv = exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
     close_prices = np.array([candle[4] for candle in ohlcv], dtype=np.float64)
     return close_prices
 
+@mcp.tool()
 def analyze_bollinger(close_prices, period=20, deviation=2):
+    """Analisa se uma criptomoeda está no topo ou fundo das bandas de bollinger
+
+    Args:
+        close_prices (): Preço de fechamento
+    
+    Returns:
+        string: Resultado da análise em string (top = topo, bottom = fundo, neutral = neutro)
+    """
+
     upper, middle, lower = talib.BBANDS(close_prices, timeperiod=period, nbdevup=deviation, nbdevdn=deviation, matype=0)
     last_price = close_prices[-1]
     if last_price >= upper[-1]:
